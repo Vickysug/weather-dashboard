@@ -235,11 +235,11 @@ function handleSearchHistoryClick(e) {
     var btn = e.target;
     var search = btn.getAttribute('data-search');
     fetchCoords(search);
-}
+
 initSearchHistory();
 searchForm.addEventListener('submit', handleSearchFormSubmit);
 searchHistoryContainer.addEventListener('click', handleSearchHistoryClick);
-
+}
 //The OpenWeather Current Weather Data documentation provides an example of how to make an API call using just the city name, as shown in the following code:
 
 

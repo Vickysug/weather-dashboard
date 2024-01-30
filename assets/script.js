@@ -19,10 +19,10 @@ var serachForm
 searchBtn.addEventListener("click", searchCity)
 
 //validate the input of the city, then call out next function
-function searchCity() {
-
+function searchCity(e) {
+console.log(searchInput.value)
     e.preventDefault()
-    var city = searchInput.ariaValueMax.trim()
+    var city = searchInput
     geoCoords(city)
 
     searchInput.value.innerHTML = ""

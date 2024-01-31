@@ -22,7 +22,7 @@ searchBtn.addEventListener("click", searchCity)
 function searchCity(e) {
 console.log(searchInput.value)
     e.preventDefault()
-    var city = searchInput
+    var city = searchInput.value
     geoCoords(city)
 
     searchInput.value.innerHTML = ""
@@ -36,14 +36,21 @@ function geoCoords(city) {
 //fetching the city and its coorinates
 fetch(geoURL)
     .then(function (response) {
+        console.log(response);
         return response.json();
     }).then(function (data) {
-        console.log(data[0]);
-        appendToHistory(city);
+        console.log(data);
+        //appendToHistory(city);
         weatherCoord(data[0], city)
     }
     )
 }
+
+//AskBSC said to make a function called appendToHistory for the the purpose of adding the searched city to the search history
+ function appendToHistory (){
+
+ }
+
 //purpose of this function is to use geo fetch data and get weather ready to call out functions to display current day and forecast
 function weatherCoord(location, city) {//changed "data[0]" to location as code didnt like the [0]
     console.log(location, city);
@@ -72,11 +79,12 @@ function currentDay(weather, city, timezone) {
     console.log(weather);
     //pull data info from api
     var temp = weather.main.temp
+    var wind = weather.wind.speed
     console.log(temp);
 
     //create card to list information
     var humidity = weather.main.humidity;
-    var iconUrl = `https://openweathermap.org/img/w/${weather.weather[0].icon}.png;`
+    var iconUrl = `https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`;
     var iconDescription = weather.weather[0].description || weather[0].main;
     var card = document.createElement('div')
     var cardBody = document.createElement('div')
@@ -97,14 +105,14 @@ function currentDay(weather, city, timezone) {
     weatherIcon.setAttribute('class', 'weather-img');
 
     //cardBody elements - title - text
-    var cardTitle
-    var cardTextTemp =
+    var cardTitle = document.createElement("div");
+    //var cardTextTemp =
 
         //join the card and date
         cardTitle.textContent = city
-    heading.textContent = `${city} (${date})`;
-    tempEl.textContent = `Temp: ${tempF}°F`;
-    windEl.textContent = `Wind: ${windMph} MPH`;
+    //heading.textContent = `${city} (${date})`;
+    tempEl.textContent = `Temp: ${temp}°F`;
+    windEl.textContent = `Wind: ${wind} MPH`;
     humidityEl.textContent = `Humidity: ${humidity} %`;
 
     //append
@@ -119,7 +127,7 @@ function currentDay(weather, city, timezone) {
 // daily forecast.
 function renderForecastCard(forecast) {
     // variables for data from api
-    var iconUrl = `https://openweathermap.org/img/w/${forecast}.weather[0].icon}.png`;
+    var iconUrl = `https://openweathermap.org/img/w/${forecast.weather[0].icon}.png`;
     var iconDescription = forecast.weather[0].description;
     var tempF = forecast.main.temp;
     var humidity = forecast.main.humidity;

@@ -37,9 +37,10 @@ SO THAT I can plan a trip accordingly
     * The humidity
   * When a user click on a city in the search history they are again presented with current and future conditions for that city
 
-## Mock-Up
+## Screenshot of finished app
+![alt text](image.png)
 
-The following image shows the web application's appearance and functionality:
+## Link to deployed page
 
-![The weather app includes a search option, a list of cities, and a five-day forecast and current weather conditions for London.](./assets/10-server-side-apis-challenge-demo.png)
+https://vickysug.github.io/weather-dashboard/
 

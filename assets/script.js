@@ -20,7 +20,7 @@ searchBtn.addEventListener("click", searchCity)
 
 //validate the input of the city, then call out next function
 function searchCity(e) {
-console.log(searchInput.value)
+    console.log(searchInput.value)
     e.preventDefault()
     var city = searchInput.value
     geoCoords(city)
@@ -33,23 +33,23 @@ function geoCoords(city) {
 
     var geoURL = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${APIkey}`
 
-//fetching the city and its coorinates
-fetch(geoURL)
-    .then(function (response) {
-        console.log(response);
-        return response.json();
-    }).then(function (data) {
-        console.log(data);
-        //appendToHistory(city);
-        weatherCoord(data[0], city)
-    }
-    )
+    //fetching the city and its coorinates
+    fetch(geoURL)
+        .then(function (response) {
+            console.log(response);
+            return response.json();
+        }).then(function (data) {
+            console.log(data);
+            //appendToHistory(city);
+            weatherCoord(data[0], city)
+        }
+        )
 }
 
 //AskBSC said to make a function called appendToHistory for the the purpose of adding the searched city to the search history
- function appendToHistory (){
+function appendToHistory() {
 
- }
+}
 
 //purpose of this function is to use geo fetch data and get weather ready to call out functions to display current day and forecast
 function weatherCoord(location, city) {//changed "data[0]" to location as code didnt like the [0]
@@ -60,7 +60,7 @@ function weatherCoord(location, city) {//changed "data[0]" to location as code d
     var weatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${APIkey}`
 
 
-    //fething the weather for current and forecast (copy & paste fetch)
+    //fetching the weather for current and forecast (copy & paste fetch)
     fetch(weatherURL)
         .then(function (response) {
             return response.json();
@@ -74,7 +74,7 @@ function weatherCoord(location, city) {//changed "data[0]" to location as code d
         )
 }
 //to display weather for one day
-function currentDay(weather, city, timezone) {
+function currentDay(weather, city) {
     //current = data[0]
     console.log(weather);
     //pull data info from api
@@ -104,13 +104,12 @@ function currentDay(weather, city, timezone) {
     weatherIcon.setAttribute('alt', iconDescription);
     weatherIcon.setAttribute('class', 'weather-img');
 
-    //cardBody elements - title - text
-    var cardTitle = document.createElement("div");
-    //var cardTextTemp =
 
-        //join the card and date
-        cardTitle.textContent = city
-    //heading.textContent = `${city} (${date})`;
+    //var cardTextTemp =
+    var date = dayjs().format('D/M/YYYY')
+    //join the card and date
+    // heading.textContent = city
+    heading.textContent = `${city} (${date})`;
     tempEl.textContent = `Temp: ${temp}°F`;
     windEl.textContent = `Wind: ${wind} MPH`;
     humidityEl.textContent = `Humidity: ${humidity} %`;
@@ -185,46 +184,6 @@ function forcast5Day(dailyForecast) {
         }
     }
 }
-// function renderItems(city, data) {
-//     renderCurrentWeather(city, data.list[0], data.city.timezone);
-//     renderForecast(data.list);
-// }
-// Fetches weather data for given location from the Weather Geolocation
-// endpoint; then, calls functions to display current and forecast weather data.
-// function fetchWeather(location) {
-//     var { lat } = location;
-//     var { lon } = location;
-//     var city = location.name;
-//     var apiUrl = `${weatherApiRootUrl}/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${weatherAPIkey}`;
-//     fetch(apiUrl)
-//         .then(function (res) {
-//             return res.json();
-//         })
-//         .then(function (data) {
-//             renderItems(city, data);
-//         })
-//         .catch(function (err) {
-//             console.error(err);
-//         });
-// }
-// function fetchCoords(search) {
-//     var apiUrl = `${weatherApiRootUrl}/geo/1.0/direct?q=${search}&limit=5&appid=${weatherAPIkey}`;
-//     fetch(apiUrl)
-//         .then(function (res) {
-//             return res.json();
-//         })
-//         .then(function (data) {
-//             if (!data[0]) {
-//                 alert('Location not found');
-//             } else {
-//                 appendToHistory(search);
-//                 fetchWeather(data[0]);
-//             }
-//         })
-//         .catch(function (err) {
-//             console.error(err);
-//         });
-// }
 function handleSearchFormSubmit(e) {
     // Don't continue if there is nothing in the search form
     if (!searchInput.value) {
@@ -244,9 +203,9 @@ function handleSearchHistoryClick(e) {
     var search = btn.getAttribute('data-search');
     fetchCoords(search);
 
-initSearchHistory();
-searchForm.addEventListener('submit', handleSearchFormSubmit);
-searchHistoryContainer.addEventListener('click', handleSearchHistoryClick);
+    initSearchHistory();
+    searchForm.addEventListener('submit', handleSearchFormSubmit);
+    searchHistoryContainer.addEventListener('click', handleSearchHistoryClick);
 }
 //The OpenWeather Current Weather Data documentation provides an example of how to make an API call using just the city name, as shown in the following code:
 
